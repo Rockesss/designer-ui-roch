@@ -128,12 +128,12 @@
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
   @media (prefers-reduced-motion:reduce){.float-phone{animation:none}}
   .scribble{
-    position:absolute;z-index:4;right:6%;top:6%;
+    position:absolute;z-index:4;left:33%;right:auto;top:1%;
     font-family:'Caveat',cursive;font-size:26px;color:var(--teal);
     transform:rotate(-7deg);text-align:center;line-height:1.05;
     text-shadow:0 1px 0 rgba(0,0,0,.15);
   }
-  .scribble svg{width:74px;height:40px;display:block;margin:4px auto 0}
+  .scribble svg{width:78px;height:46px;display:block;margin:4px auto 0}
 
   /* bottom white wave */
   .hero-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:2;line-height:0}
@@ -229,6 +229,35 @@
   .kf p{max-width:640px;margin:16px auto 0;font-size:16px;line-height:1.6;color:var(--ink-soft)}
   .kf .pill{margin-top:28px}
 
+  /* ---------- Locked projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,28px);max-width:760px;margin:clamp(44px,6vw,60px) auto 0}
+  .locked-card{
+    position:relative;background:var(--white);border:1px solid var(--line);border-radius:22px;
+    overflow:hidden;text-align:left;display:flex;flex-direction:column;
+  }
+  .locked-card__preview{position:relative;height:148px;background:linear-gradient(135deg,#E7EFFF,#C9D6F0);display:grid;place-items:center}
+  .locked-card__skel{position:absolute;inset:20px;display:flex;flex-direction:column;gap:9px;filter:blur(2px);opacity:.6}
+  .locked-card__skel span{height:13px;border-radius:7px;background:#fff}
+  .locked-card__skel span:nth-child(1){width:65%}
+  .locked-card__skel span:nth-child(2){width:90%}
+  .locked-card__skel span:nth-child(3){width:48%}
+  .locked-card__lock{position:relative;width:50px;height:50px;border-radius:50%;background:rgba(29,35,64,.92);display:grid;place-items:center;box-shadow:0 10px 26px rgba(29,35,64,.28)}
+  .locked-card__lock svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .locked-card__body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
+  .locked-card h3{font-size:18px;font-weight:700}
+  .locked-card p{font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:8px}
+  .locked-card .pill{margin-top:18px;align-self:flex-start}
+  .badge--lock{background:var(--lavender);border:1px solid var(--line)}
+  .unlock-line{
+    max-width:760px;margin:clamp(22px,3vw,28px) auto 0;
+    background:var(--navy);color:#fff;border-radius:18px;
+    padding:20px clamp(20px,3vw,30px);
+    display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;text-align:center;
+  }
+  .unlock-line .lock-ico{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .unlock-line p{font-size:clamp(15px,1.5vw,17px);font-weight:600}
+  .unlock-line b{color:var(--gold);font-weight:700}
+
   /* ---------- Skills ---------- */
   .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(22px,3vw,30px)}
   .skillcat h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:9px}
@@ -317,6 +346,7 @@
     .profile__photo{max-width:360px;margin:0 auto}
     .inforow{grid-template-columns:1fr;gap:32px}
     .inforow--rev .inforow__media{order:0}
+    .proj-grid{grid-template-columns:1fr;max-width:420px}
     .footer-grid{grid-template-columns:1fr 1fr}
   }
   @media (max-width:520px){
@@ -394,7 +424,7 @@
       <img class="float-phone" src="img/phone-fact-cutout.png"
            alt="Écran de l'application FACT conçue pour Mobility by Colas">
       <div class="scribble" aria-hidden="true">interface&nbsp;?
-        <svg viewBox="0 0 74 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 6c14 22 44 30 68 26"/><path d="M62 22l8 10-13 2"/></svg>
+        <svg viewBox="0 0 74 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M70 5C55 30 30 38 6 34"/><path d="M15 25 5 34l3 12"/></svg>
       </div>
     </div>
   </div>
@@ -426,21 +456,21 @@
     <div class="pillars">
       <article class="pcard rv">
         <div class="pcard__ill" aria-hidden="true">
-          <svg viewBox="0 0 48 48"><rect x="6" y="6" width="15" height="15" rx="2"/><rect x="27" y="6" width="15" height="15" rx="2"/><rect x="6" y="27" width="15" height="15" rx="2"/><rect x="27" y="27" width="15" height="15" rx="2"/><path d="M14 21v6M34 21v6M21 14h6M21 34h6"/></svg>
+          <svg viewBox="0 0 48 48"><rect x="7" y="7" width="15" height="15" rx="3.5"/><rect x="26" y="7" width="15" height="15" rx="3.5"/><rect x="7" y="26" width="15" height="15" rx="3.5"/><rect x="26" y="26" width="15" height="15" rx="3.5"/></svg>
         </div>
         <h3>Design systems multi-marques</h3>
         <p>Composants, variants, auto-layout, bibliothèques partagées et handoff. Déclinaison du ton visuel marque par marque : 8 projets clients menés en parallèle en freelance, plus un environnement industriel multilingue (Bridor, 5 langues).</p>
       </article>
       <article class="pcard rv">
         <div class="pcard__ill" aria-hidden="true">
-          <svg viewBox="0 0 48 48"><path d="M4 24s7-12 20-12 20 12 20 12-7 12-20 12S4 24 4 24Z"/><circle cx="24" cy="24" r="5.5"/><path d="M33 33l4 4"/></svg>
+          <svg viewBox="0 0 48 48"><path d="M5 24s7.5-12 19-12 19 12 19 12-7.5 12-19 12S5 24 5 24Z"/><circle cx="24" cy="24" r="6"/></svg>
         </div>
         <h3>Accessibilité &amp; qualité de production</h3>
         <p>Bonnes pratiques courantes intégrées dès la conception : contraste, hiérarchie sémantique, navigation clavier, alternatives textuelles. Montée en compétences en cours sur le référentiel RGAA complet.</p>
       </article>
       <article class="pcard rv">
         <div class="pcard__ill" aria-hidden="true">
-          <svg viewBox="0 0 48 48"><path d="M11 8l9 9-9 9-3-9 3-9Z"/><path d="M9 17l11 0"/><path d="M30 6l1.6 4.4L36 12l-4.4 1.6L30 18l-1.6-4.4L24 12l4.4-1.6L30 6Z"/><path d="M36 28l1.2 3.3L40.5 32.5l-3.3 1.2L36 37l-1.2-3.3L31.5 32.5l3.3-1.2L36 28Z"/></svg>
+          <svg viewBox="0 0 48 48"><path d="M20 8c0 7 2.5 9.5 9.5 9.5C22.5 17.5 20 20 20 27c0-7-2.5-9.5-9.5-9.5C17.5 17.5 20 15 20 8Z"/><path d="M36 26c0 3.7 1.1 4.8 4.8 4.8-3.7 0-4.8 1.1-4.8 4.8 0-3.7-1.1-4.8-4.8-4.8 3.7 0 4.8-1.1 4.8-4.8Z"/></svg>
         </div>
         <h3>IA appliquée au design</h3>
         <p>Claude Code en pratique quotidienne depuis 18 mois pour produire interfaces et composants, prompt engineering pour générer des variations, veille active sur Figma AI.</p>
@@ -552,10 +582,11 @@
 <section class="section" id="projet" aria-labelledby="projet-title">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2 class="sec-title" id="projet-title">Un projet en vedette</h2>
+      <h2 class="sec-title" id="projet-title">Projets</h2>
       <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
         <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
       </svg>
+      <p class="sec-lead">Un projet personnel ouvert, et des réalisations client présentées sur demande.</p>
     </div>
     <div class="kf rv">
       <div class="kf__shots">
@@ -563,12 +594,49 @@
         <img src="img/Mobile-kefaire-crit-3.jpg" alt="Écran de critères de recherche d'activités dans Kefaire">
         <img src="img/Mobile-kefaire-1-Reco-1.jpg" alt="Écran de recommandations d'activités dans Kefaire">
       </div>
-      <span class="badge">Progressive Web App · Projet personnel</span>
+      <span class="badge">Projet personnel · Progressive Web App</span>
       <h3>Kefaire — découverte d'activités à Paris</h3>
       <p>Conception produit complète : design system, écrans et prototype Figma. Développement IA-assisté avec Claude Code, déployée en production. Une PWA de découverte d'activités, des critères de recherche aux recommandations personnalisées.</p>
       <button class="pill" data-open-contact>Voir le projet
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
+    </div>
+
+    <div class="proj-grid">
+      <article class="locked-card rv">
+        <div class="locked-card__preview" aria-hidden="true">
+          <div class="locked-card__skel"><span></span><span></span><span></span></div>
+          <div class="locked-card__lock">
+            <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          </div>
+        </div>
+        <div class="locked-card__body">
+          <span class="badge badge--lock">Projet client · Verrouillé</span>
+          <h3>Isalys Matching</h3>
+          <p>Aperçu, écrans et démarche présentés sur demande.</p>
+          <button class="pill" data-open-contact>Déverrouiller</button>
+        </div>
+      </article>
+      <article class="locked-card rv">
+        <div class="locked-card__preview" aria-hidden="true">
+          <div class="locked-card__skel"><span></span><span></span><span></span></div>
+          <div class="locked-card__lock">
+            <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          </div>
+        </div>
+        <div class="locked-card__body">
+          <span class="badge badge--lock">Projet client · Verrouillé</span>
+          <h3>Candidoc</h3>
+          <p>Aperçu, écrans et démarche présentés sur demande.</p>
+          <button class="pill" data-open-contact>Déverrouiller</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="unlock-line rv">
+      <svg class="lock-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <p><b>+7 projets UI à déverrouiller</b> — présentés de vive voix.</p>
+      <button class="pill" data-open-contact>Prenons rendez-vous</button>
     </div>
   </div>
 </section>

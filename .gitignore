@@ -3,3 +3,5 @@ package.json
 package-lock.json
 qa.mjs
 qa-*.png
+shot*.mjs
+shot-*.png
