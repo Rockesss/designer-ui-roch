@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roch® — UI Designer · Design systems multi-marques</title>
+<meta name="description" content="Candidature créative pour le poste d'UI Designer freelance. Démonstrateur d'interface — non officiel, non affilié à Servier ni à Daflon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1D2340;
+    --teal:#46BBD4;
+    --teal-d:#34A6BF;
+    --lavender:#E7EFFF;
+    --gold:#FFCF24;
+    --white:#FFFFFF;
+    --line:#CFD8E9;
+    --ink-soft:#4A5170;
+    --header-h:78px;
+    --maxw:1280px;
+    --pad:clamp(20px,5vw,64px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:'Barlow',Roboto,'Noto Sans',sans-serif;
+    color:var(--navy);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+  /* ---------- Buttons ---------- */
+  .pill{
+    display:inline-flex;align-items:center;gap:.5em;
+    background:var(--teal);color:var(--navy);
+    font-weight:600;font-size:15px;
+    padding:13px 30px;border-radius:52px;border:none;cursor:pointer;
+    transition:background .18s ease, transform .18s ease;
+    white-space:nowrap;
+  }
+  .pill:hover{background:var(--teal-d)}
+  .pill:active{transform:translateY(1px)}
+  .pill svg{width:16px;height:16px}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    background:var(--white);
+    height:var(--header-h);
+    display:flex;align-items:center;
+    border-bottom:1px solid transparent;
+    transition:box-shadow .2s ease;
+  }
+  .site-header.scrolled{box-shadow:0 4px 24px rgba(29,35,64,.07)}
+  .header-inner{
+    width:100%;max-width:var(--maxw);margin:0 auto;
+    padding:0 var(--pad);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .wordmark{
+    font-weight:800;font-size:30px;letter-spacing:-.02em;
+    color:var(--navy);line-height:1;display:inline-flex;align-items:flex-start;
+  }
+  .wordmark sup{font-size:.42em;font-weight:700;margin-top:.15em;margin-left:1px}
+  .nav{display:flex;align-items:center;gap:34px}
+  .nav a{font-size:15px;font-weight:500;color:var(--navy);transition:color .15s ease;position:relative}
+  .nav a:hover{color:var(--teal-d)}
+  .header-right{display:flex;align-items:center;gap:20px}
+  .icon-btn{
+    width:24px;height:24px;display:grid;place-items:center;color:var(--navy);
+    background:none;border:none;cursor:pointer
+  }
+  .icon-btn svg{width:21px;height:21px}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+  .burger span{width:24px;height:2px;background:var(--navy);border-radius:2px;transition:.2s}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;background:var(--navy);color:var(--white);
+    overflow:hidden;isolation:isolate;
+  }
+  .hero-inner{
+    max-width:var(--maxw);margin:0 auto;
+    padding:clamp(48px,7vw,86px) var(--pad) clamp(120px,14vw,170px);
+    display:grid;grid-template-columns:1.04fr .96fr;gap:40px;align-items:center;
+    min-height:560px;
+  }
+  .hero-copy{max-width:560px;z-index:3}
+  .eyebrow{
+    display:inline-block;font-size:13px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal);margin-bottom:22px;
+  }
+  .hero h1{
+    font-weight:700;font-size:clamp(34px,4.6vw,54px);line-height:1.08;
+    letter-spacing:-.015em;margin-bottom:24px;
+  }
+  .hero h1 .seg{display:block}
+  .hero-sub{
+    font-size:clamp(16px,1.5vw,18px);line-height:1.6;color:#D7DEF0;
+    max-width:480px;margin-bottom:34px;
+  }
+  .hero-cta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .hero-note{font-size:14px;color:#AEB8D6}
+  .hero-note b{color:var(--white);font-weight:600}
+
+  /* right visual */
+  .hero-visual{position:relative;align-self:stretch;min-height:420px}
+  .photo-panel{
+    position:absolute;top:-86px;bottom:-170px;right:calc(-1*var(--pad));
+    left:8%;
+    background:url('img/roch-portrait.jpg') center 18% / cover no-repeat;
+    border-top-left-radius:160px;border-bottom-left-radius:140px;
+    box-shadow:0 30px 80px rgba(0,0,0,.22);
+  }
+  .float-phone{
+    position:absolute;z-index:4;left:-6%;bottom:-120px;width:min(228px,30vw);
+    filter:drop-shadow(0 26px 40px rgba(0,0,0,.34));
+    animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @media (prefers-reduced-motion:reduce){.float-phone{animation:none}}
+  .scribble{
+    position:absolute;z-index:4;right:6%;top:6%;
+    font-family:'Caveat',cursive;font-size:26px;color:var(--teal);
+    transform:rotate(-7deg);text-align:center;line-height:1.05;
+    text-shadow:0 1px 0 rgba(0,0,0,.15);
+  }
+  .scribble svg{width:74px;height:40px;display:block;margin:4px auto 0}
+
+  /* bottom white wave */
+  .hero-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:2;line-height:0}
+  .hero-wave svg{width:100%;height:clamp(60px,9vw,116px);display:block}
+
+  /* ---------- Section title kit (used later) ---------- */
+  .placeholder-section{padding:clamp(40px,7vw,80px) var(--pad) 90px;text-align:center;max-width:var(--maxw);margin:0 auto}
+  .sec-title{font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.01em}
+  .wave-rule{margin:16px auto 0;width:104px;height:12px}
+  .ph-note{margin-top:18px;color:var(--ink-soft);font-size:15px}
+
+  /* ---------- Layout helpers ---------- */
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+  section[id]{scroll-margin-top:calc(var(--header-h) + 14px)}
+  .section{padding:clamp(56px,8vw,100px) 0}
+  .section--lav{background:var(--lavender)}
+  .sec-head{text-align:center;max-width:740px;margin:0 auto clamp(36px,5vw,58px)}
+  .sec-lead{margin-top:20px;color:var(--ink-soft);font-size:clamp(15px,1.4vw,17px);line-height:1.6}
+  .eyebrow-tag{
+    display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--teal-d);margin-bottom:16px;
+  }
+  .pill--ghost{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+  .pill--ghost:hover{background:var(--navy);color:var(--white)}
+
+  /* ---------- Reveal on scroll ---------- */
+  .rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+  /* ---------- Pillars (cartes lavande, illustration débordante) ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,3vw,34px)}
+  .pcard{
+    position:relative;background:var(--lavender);border-radius:24px;
+    padding:64px 30px 34px;text-align:center;margin-top:48px;
+  }
+  .pcard__ill{
+    position:absolute;top:-48px;left:50%;transform:translateX(-50%);
+    width:96px;height:96px;background:var(--white);border-radius:50%;
+    display:grid;place-items:center;box-shadow:0 12px 30px rgba(29,35,64,.12);
+  }
+  .pcard__ill svg{width:50px;height:50px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .pcard h3{font-size:18px;font-weight:700;margin-bottom:12px}
+  .pcard p{font-size:15px;color:var(--ink-soft);line-height:1.58}
+
+  /* ---------- Profile ---------- */
+  .profile{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(32px,5vw,68px);align-items:center}
+  .profile__photo{position:relative;border-radius:26px;overflow:hidden;box-shadow:0 24px 60px rgba(29,35,64,.18)}
+  .profile__photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 18%}
+  .profile h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.01em}
+  .profile .wave-rule{margin:16px 0 0}
+  .profile__lead{margin-top:22px;font-size:clamp(15px,1.4vw,17px);line-height:1.65;color:var(--ink-soft)}
+  .profile__sub{margin-top:28px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy)}
+  .profile__list{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .profile__list li{font-size:15px;color:var(--ink-soft);line-height:1.5}
+  .profile__list b{color:var(--navy);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{background:var(--lavender);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:14px;font-weight:500;color:var(--navy)}
+
+  /* ---------- Info rows (expériences alternées) ---------- */
+  .inforow{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(32px,5vw,68px);align-items:center}
+  .inforow--rev .inforow__media{order:2}
+  .inforow__copy h3{font-size:clamp(20px,2.4vw,26px);font-weight:700;line-height:1.2}
+  .inforow__role{margin-top:8px;font-size:15px;font-weight:600;color:var(--teal-d)}
+  .inforow__list{margin-top:20px;list-style:none;display:flex;flex-direction:column;gap:13px}
+  .inforow__list li{position:relative;padding-left:26px;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+  .inforow__list li::before{
+    content:"";position:absolute;left:0;top:8px;width:11px;height:11px;border-radius:50%;
+    background:var(--teal);box-shadow:0 0 0 4px rgba(70,187,212,.18);
+  }
+  .inforow__list b{color:var(--navy);font-weight:700}
+  .inforow__minor{margin-top:18px;font-size:13.5px;color:var(--ink-soft);font-style:italic}
+  .inforow .pill{margin-top:26px}
+  .media-stack{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .media-stack img{width:100%;border-radius:16px;box-shadow:0 16px 38px rgba(29,35,64,.14);object-fit:cover}
+  .media-stack img:first-child{grid-column:1 / -1;aspect-ratio:16/10}
+  .media-stack img:not(:first-child){aspect-ratio:4/3}
+
+  /* ---------- Project (Kefaire) ---------- */
+  .kf{max-width:980px;margin:0 auto;text-align:center}
+  .kf__shots{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,2vw,26px);margin-bottom:36px}
+  .kf__shots img{
+    width:min(180px,27vw);border-radius:22px;border:5px solid var(--white);
+    box-shadow:0 18px 44px rgba(29,35,64,.2);background:var(--white);
+  }
+  .kf__shots img:nth-child(2){margin-bottom:22px}
+  .badge{
+    display:inline-block;background:var(--gold);color:var(--navy);
+    font-size:12.5px;font-weight:700;letter-spacing:.04em;
+    padding:7px 16px;border-radius:30px;margin-bottom:16px;
+  }
+  .kf h3{font-size:clamp(22px,2.6vw,28px);font-weight:700}
+  .kf p{max-width:640px;margin:16px auto 0;font-size:16px;line-height:1.6;color:var(--ink-soft)}
+  .kf .pill{margin-top:28px}
+
+  /* ---------- Skills ---------- */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(22px,3vw,30px)}
+  .skillcat h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+  .skillcat h3::before{content:"";width:14px;height:14px;border-radius:4px;background:var(--gold);flex:none}
+  .tags{display:flex;flex-wrap:wrap;gap:9px}
+  .tag{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:7px 15px;font-size:13.5px;font-weight:500;color:var(--navy)}
+
+  /* ---------- Contact ---------- */
+  .contact-card{
+    background:var(--lavender);border-radius:30px;text-align:center;
+    max-width:780px;margin:0 auto;padding:clamp(34px,5vw,58px);
+  }
+  .contact-card p{font-size:clamp(15px,1.4vw,17px);line-height:1.6;color:var(--ink-soft);max-width:520px;margin:0 auto}
+  .contact-card .avail{margin-top:20px;font-size:15px;color:var(--navy);font-weight:600}
+  .contact-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:30px}
+
+  /* ---------- Footer ---------- */
+  .site-footer{background:var(--navy);color:#C2CBE6;padding:clamp(50px,7vw,76px) 0 34px}
+  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:clamp(28px,4vw,48px)}
+  .footer-brand .wordmark{color:var(--white);font-size:30px}
+  .footer-brand p{margin-top:16px;font-size:14px;line-height:1.6;max-width:280px}
+  .footer-col h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);margin-bottom:16px}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-col a{font-size:14.5px;color:#C2CBE6;transition:color .15s ease}
+  .footer-col a:hover{color:var(--teal)}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:clamp(36px,5vw,52px);padding-top:26px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:flex-start}
+  .footer-disclaimer{font-size:12.5px;line-height:1.55;color:#9AA4C6;max-width:640px}
+  .footer-credit{font-size:12.5px;color:#9AA4C6}
+
+  /* ---------- Mobile nav ---------- */
+  .mobile-nav{
+    position:fixed;inset:var(--header-h) 0 0;background:var(--white);z-index:45;
+    transform:translateX(100%);transition:transform .26s ease;
+    display:flex;flex-direction:column;padding:20px var(--pad) 40px;overflow-y:auto;
+    visibility:hidden;
+  }
+  .mobile-nav.open{transform:none;visibility:visible}
+  .mobile-nav a{font-size:20px;font-weight:600;color:var(--navy);padding:16px 2px;border-bottom:1px solid var(--line)}
+  .mobile-nav .pill{margin-top:26px;justify-content:center}
+  @media (prefers-reduced-motion:reduce){.mobile-nav{transition:none}}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ---------- Contact / RDV popup ---------- */
+  .modal{
+    position:fixed;inset:0;z-index:80;display:none;
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .modal.open{display:flex}
+  .modal__overlay{position:absolute;inset:0;background:rgba(29,35,64,.55);backdrop-filter:blur(2px)}
+  .modal__card{
+    position:relative;background:var(--white);border-radius:26px;
+    width:min(460px,100%);padding:clamp(30px,5vw,44px);text-align:center;
+    box-shadow:0 40px 90px rgba(0,0,0,.3);
+  }
+  .modal__close{
+    position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;
+    border:none;background:var(--lavender);color:var(--navy);cursor:pointer;
+    display:grid;place-items:center;
+  }
+  .modal__close svg{width:18px;height:18px}
+  .modal__card h3{font-size:24px;font-weight:700}
+  .modal__card .wave-rule{margin:14px auto 0}
+  .modal__card p{margin-top:20px;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+  .modal__actions{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+  .modal__actions .pill{justify-content:center;white-space:normal;word-break:break-word;text-align:center}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:920px){
+    .nav{display:none}
+    .header-right .pill{display:none}
+    .burger{display:flex}
+    .hero-inner{grid-template-columns:1fr;min-height:0;gap:0;
+      padding-bottom:clamp(90px,24vw,120px)}
+    .hero-visual{min-height:340px;margin-top:30px}
+    .photo-panel{position:relative;inset:auto;left:0;right:0;height:340px;
+      border-radius:28px;width:100%}
+    .float-phone{left:auto;right:4%;bottom:-70px;width:150px}
+    .scribble{display:none}
+  }
+  @media (max-width:980px){
+    .pillars{grid-template-columns:1fr;max-width:440px;margin:0 auto}
+    .pcard{margin-top:60px}
+    .profile{grid-template-columns:1fr;gap:34px}
+    .profile__photo{max-width:360px;margin:0 auto}
+    .inforow{grid-template-columns:1fr;gap:32px}
+    .inforow--rev .inforow__media{order:0}
+    .footer-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:520px){
+    .wordmark{font-size:26px}
+    .hero h1{font-size:30px}
+    .float-phone{width:128px;bottom:-56px}
+    .footer-grid{grid-template-columns:1fr}
+    .footer-bottom{flex-direction:column}
+    .kf__shots img{width:30vw}
+    .contact-actions{flex-direction:column;align-items:stretch}
+    .contact-actions .pill{justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="top">
+  <div class="header-inner">
+    <a href="#top" class="wordmark" aria-label="roch, accueil">roch<sup>®</sup></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#profil">Profil</a>
+      <a href="#competences">Compétences</a>
+      <a href="#experiences">Expériences</a>
+      <a href="#projet">Projet</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-right">
+      <button class="icon-btn" aria-label="Rechercher" data-inert-cta>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button class="pill" data-open-contact>Prenons rendez-vous</button>
+      <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE NAV ============ -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+  <a href="#profil">Profil</a>
+  <a href="#competences">Compétences</a>
+  <a href="#experiences">Expériences</a>
+  <a href="#projet">Projet</a>
+  <a href="#contact">Contact</a>
+  <button class="pill" data-open-contact>Prenons rendez-vous</button>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Candidature — UI Designer freelance</span>
+      <h1 id="hero-title">
+        <span class="seg">UI Designer.</span>
+        <span class="seg">Design systems multi-marques.</span>
+        <span class="seg">Production IA-assistée.</span>
+      </h1>
+      <p class="hero-sub">
+        Je conçois et fais évoluer des interfaces web et mobile en cohérence avec des
+        design systems existants, du back-office au front. Quatre ans d'expérience,
+        dont dix-huit mois de production design assistée par IA.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#profil" class="pill">Voir le profil
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <span class="hero-note">Disponible dès le <b>24 août 2026</b> · Paris</span>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="false">
+      <div class="photo-panel" role="img" aria-label="Portrait de Roch de Dinechin"></div>
+      <img class="float-phone" src="img/phone-fact-cutout.png"
+           alt="Écran de l'application FACT conçue pour Mobility by Colas">
+      <div class="scribble" aria-hidden="true">interface&nbsp;?
+        <svg viewBox="0 0 74 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 6c14 22 44 30 68 26"/><path d="M62 22l8 10-13 2"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 116" preserveAspectRatio="none">
+      <path d="M0,54 C220,116 430,18 720,52 C1010,86 1230,128 1440,70 L1440,116 L0,116 Z" fill="#fff"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SECTIONS À CONSTRUIRE ICI (voir PROMPT_CLAUDE_CODE.md)         -->
+<!-- Ordre : 3 piliers · Profil · Expériences (FACT, Bridor) ·     -->
+<!-- Projet (Kefaire) · Compétences · Contact · Footer + popup     -->
+<!-- Réutilise le kit de titre de section ci-dessous :             -->
+<!--   <h2 class="sec-title">Titre</h2>                            -->
+<!--   <svg class="wave-rule" ...> (vague jaune signature)         -->
+<!-- ============================================================= -->
+<!-- ============ 3 PILIERS ============ -->
+<section class="section" aria-labelledby="piliers-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title" id="piliers-title">Trois piliers pour ce poste</h2>
+      <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+        <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="pillars">
+      <article class="pcard rv">
+        <div class="pcard__ill" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><rect x="6" y="6" width="15" height="15" rx="2"/><rect x="27" y="6" width="15" height="15" rx="2"/><rect x="6" y="27" width="15" height="15" rx="2"/><rect x="27" y="27" width="15" height="15" rx="2"/><path d="M14 21v6M34 21v6M21 14h6M21 34h6"/></svg>
+        </div>
+        <h3>Design systems multi-marques</h3>
+        <p>Composants, variants, auto-layout, bibliothèques partagées et handoff. Déclinaison du ton visuel marque par marque : 8 projets clients menés en parallèle en freelance, plus un environnement industriel multilingue (Bridor, 5 langues).</p>
+      </article>
+      <article class="pcard rv">
+        <div class="pcard__ill" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M4 24s7-12 20-12 20 12 20 12-7 12-20 12S4 24 4 24Z"/><circle cx="24" cy="24" r="5.5"/><path d="M33 33l4 4"/></svg>
+        </div>
+        <h3>Accessibilité &amp; qualité de production</h3>
+        <p>Bonnes pratiques courantes intégrées dès la conception : contraste, hiérarchie sémantique, navigation clavier, alternatives textuelles. Montée en compétences en cours sur le référentiel RGAA complet.</p>
+      </article>
+      <article class="pcard rv">
+        <div class="pcard__ill" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M11 8l9 9-9 9-3-9 3-9Z"/><path d="M9 17l11 0"/><path d="M30 6l1.6 4.4L36 12l-4.4 1.6L30 18l-1.6-4.4L24 12l4.4-1.6L30 6Z"/><path d="M36 28l1.2 3.3L40.5 32.5l-3.3 1.2L36 37l-1.2-3.3L31.5 32.5l3.3-1.2L36 28Z"/></svg>
+        </div>
+        <h3>IA appliquée au design</h3>
+        <p>Claude Code en pratique quotidienne depuis 18 mois pour produire interfaces et composants, prompt engineering pour générer des variations, veille active sur Figma AI.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROFIL ============ -->
+<section class="section section--lav" id="profil" aria-labelledby="profil-title">
+  <div class="wrap profile">
+    <div class="profile__photo rv">
+      <img src="img/roch-portrait.jpg" alt="Portrait de Roch de Dinechin, UI Designer">
+    </div>
+    <div class="profile__copy rv">
+      <h2 id="profil-title">Le profil</h2>
+      <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+        <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <p class="profile__lead">UI Designer &amp; Product Owner, 4 ans d'expérience, du back-office au front, en environnement industriel et multi-marques. Production design accélérée par l'IA, en appui sur les équipes produit et développement.</p>
+
+      <p class="profile__sub">Formation</p>
+      <ul class="profile__list">
+        <li><b>Master Expert en Stratégie Digitale</b> — Digital Campus Rennes</li>
+        <li><b>Licence de Droit</b> — Université Rennes 1</li>
+      </ul>
+
+      <p class="profile__sub">Langues</p>
+      <div class="chips">
+        <span class="chip">Français — natif</span>
+        <span class="chip">Anglais — C1 professionnel (TOEIC 865)</span>
+        <span class="chip">Allemand — notions</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPÉRIENCES ============ -->
+<section id="experiences" aria-labelledby="exp-title">
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2 class="sec-title" id="exp-title">Expériences</h2>
+        <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+          <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- Expérience #1 : Mobility by Colas / FACT -->
+      <div class="inforow rv">
+        <div class="inforow__media">
+          <div class="media-stack">
+            <img src="img/mockup-fact-accueil.jpg" alt="Écran d'accueil de l'application FACT pour Mobility by Colas">
+            <img src="img/mockup-fact-livreurl.jpg" alt="Écran de suivi terrain de l'application FACT">
+            <img src="img/envato-labs-image-edit.png" alt="Composants et back-office du plugin métier FACT">
+          </div>
+        </div>
+        <div class="inforow__copy">
+          <span class="eyebrow-tag">Expérience · Mobility by Colas</span>
+          <h3>Refonte UI du plugin métier FACT</h3>
+          <p class="inforow__role">UI Designer &amp; Product Owner — Mobility by Colas / Aximum (Groupe Colas) · Décembre 2025 → Mai 2026</p>
+          <ul class="inforow__list">
+            <li>Refonte UI complète du plugin métier <b>FACT</b> — back-office (admin) et front-end (terrain) : nouvelle hiérarchie visuelle, charte, composants Figma, écrans haute fidélité, prototype interactif.</li>
+            <li>Système de <b>design tokens</b> (couleurs, typo, espacements) et bibliothèque de composants Figma exploitable par l'équipe dev.</li>
+            <li>Production <b>IA-assistée</b> avec Claude Code : maquettes Figma converties en composants React et HTML/CSS opérationnels, cycle design-to-prod accéléré.</li>
+            <li>Dashboard interne de remontée des erreurs pour des équipes terrain non techniques.</li>
+            <li>En appui : spécification fonctionnelle, animation des sprints (2 semaines), recette Squash TM.</li>
+          </ul>
+          <button class="pill" data-open-contact>Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--lav">
+    <div class="wrap">
+      <!-- Expérience #2 : Bridor (CDD) — sens inversé -->
+      <div class="inforow inforow--rev rv">
+        <div class="inforow__media">
+          <div class="media-stack">
+            <img src="img/Laptop-02.jpg" alt="Catalogue digital Bridor présenté sur ordinateur portable">
+            <img src="img/Computer-Screen-Mockup--_3_.jpg" alt="Site e-commerce Bridor.com sur écran d'ordinateur">
+            <img src="img/Bridor---mockup---form.jpg" alt="Formulaire de contact du site Bridor">
+          </div>
+        </div>
+        <div class="inforow__copy">
+          <span class="eyebrow-tag">Expérience · Bridor — CDD</span>
+          <h3>Conception UI &amp; pilotage digital</h3>
+          <p class="inforow__role">Chef de projets digitaux &amp; Conception UI — Bridor (Groupe Le Duff) · Août 2022 → Septembre 2024</p>
+          <ul class="inforow__list">
+            <li><b>50+ maquettes Figma</b> sur le portefeuille digital : pages produits, formulaires, parcours, écrans back-office, prototypage avant validation des directions métier.</li>
+            <li><b>Refonte du Catalogue Digital</b> (PDF généré dynamiquement depuis SAP) : conception graphique, choix typographiques pour 5 langues, déclinaison de la charte Bridor → <b>+120 % de téléchargements</b>.</li>
+            <li><b>Pilotage du site Bridor.com</b> sous SAP Commerce / Hybris (5 langues, 350+ produits) : conception des écrans, briefs visuels pour l'éditeur, recette → <b>+117 % de formulaires soumis</b> et <b>+131 % de trafic SEO France</b>.</li>
+            <li>Outils internes pour les équipes commerciales internationales (supports multilingues).</li>
+          </ul>
+          <p class="inforow__minor">Précédemment : stage en conception digitale chez Bridor (mars → août 2022).</p>
+          <button class="pill" data-open-contact>Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJET (KEFAIRE) ============ -->
+<section class="section" id="projet" aria-labelledby="projet-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title" id="projet-title">Un projet en vedette</h2>
+      <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+        <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="kf rv">
+      <div class="kf__shots">
+        <img src="img/Mobile-kefaire-1-Accueil.jpg" alt="Écran d'accueil de l'application Kefaire">
+        <img src="img/Mobile-kefaire-crit-3.jpg" alt="Écran de critères de recherche d'activités dans Kefaire">
+        <img src="img/Mobile-kefaire-1-Reco-1.jpg" alt="Écran de recommandations d'activités dans Kefaire">
+      </div>
+      <span class="badge">Progressive Web App · Projet personnel</span>
+      <h3>Kefaire — découverte d'activités à Paris</h3>
+      <p>Conception produit complète : design system, écrans et prototype Figma. Développement IA-assisté avec Claude Code, déployée en production. Une PWA de découverte d'activités, des critères de recherche aux recommandations personnalisées.</p>
+      <button class="pill" data-open-contact>Voir le projet
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPÉTENCES ============ -->
+<section class="section section--lav" id="competences" aria-labelledby="comp-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title" id="comp-title">Compétences &amp; outils</h2>
+      <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+        <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="skills">
+      <div class="skillcat rv">
+        <h3>Design</h3>
+        <div class="tags">
+          <span class="tag">Figma — composants</span>
+          <span class="tag">Variants &amp; auto-layout</span>
+          <span class="tag">Prototypage</span>
+          <span class="tag">Adobe Creative Cloud</span>
+          <span class="tag">Whimsical</span>
+        </div>
+      </div>
+      <div class="skillcat rv">
+        <h3>IA design</h3>
+        <div class="tags">
+          <span class="tag">Claude Code (18 mois)</span>
+          <span class="tag">Prompt engineering</span>
+          <span class="tag">Veille Figma AI</span>
+        </div>
+      </div>
+      <div class="skillcat rv">
+        <h3>Dev &amp; intégration</h3>
+        <div class="tags">
+          <span class="tag">HTML / CSS / JS</span>
+          <span class="tag">React</span>
+          <span class="tag">Vite</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">WordPress</span>
+          <span class="tag">Git / GitHub</span>
+        </div>
+      </div>
+      <div class="skillcat rv">
+        <h3>Collaboration &amp; gestion de projet</h3>
+        <div class="tags">
+          <span class="tag">Azure DevOps</span>
+          <span class="tag">Jira</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Squash TM</span>
+          <span class="tag">Notion</span>
+          <span class="tag">Slack</span>
+        </div>
+      </div>
+      <div class="skillcat rv">
+        <h3>Web &amp; analytics</h3>
+        <div class="tags">
+          <span class="tag">GA4</span>
+          <span class="tag">Google Search Console</span>
+          <span class="tag">GSAP</span>
+          <span class="tag">ChartJS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title" id="contact-title">Prenons rendez-vous</h2>
+      <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+        <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="contact-card rv">
+      <p>Pour échanger sur le poste d'UI Designer freelance ou sur un projet, le plus simple est de m'écrire directement.</p>
+      <p class="avail">Disponible dès le 24 août 2026 · Paris (présentiel partiel)</p>
+      <div class="contact-actions">
+        <a class="pill" href="mailto:rdupontdedinechin@isalys.eu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="pill pill--ghost" href="https://www.linkedin.com/in/roch-de-dinechin-0a5946214/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C21.4 8.65 22 10.9 22 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21h-4V9Z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="wordmark" aria-hidden="true">roch<sup>®</sup></span>
+        <p>UI Designer · Design systems multi-marques · Production IA-assistée. Page de candidature, à des fins de démonstration.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Page</h4>
+        <ul>
+          <li><a href="#profil">Profil</a></li>
+          <li><a href="#experiences">Expériences</a></li>
+          <li><a href="#projet">Projet</a></li>
+          <li><a href="#competences">Compétences</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:rdupontdedinechin@isalys.eu">Email</a></li>
+          <li><a href="https://www.linkedin.com/in/roch-de-dinechin-0a5946214/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="#contact">Prendre rendez-vous</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="#" data-inert-cta>Mentions légales</a></li>
+          <li><a href="#" data-inert-cta>Confidentialité</a></li>
+          <li><a href="#" data-inert-cta>Accessibilité</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">
+        Page de candidature créative, non officielle et non affiliée à Servier ni à Daflon.
+        Réalisée à des fins de démonstration. Aucun visuel, texte médical ou réglementaire de
+        daflon.fr n'est reproduit ; seul le langage visuel est réinterprété.
+      </p>
+      <p class="footer-credit">Conçu et développé par Roch de Dinechin · 2026</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ POPUP RENDEZ-VOUS ============ -->
+<div class="modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal__overlay" data-close-contact></div>
+  <div class="modal__card" role="document">
+    <button class="modal__close" type="button" aria-label="Fermer" data-close-contact>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <h3 id="modal-title">Prenons rendez-vous</h3>
+    <svg class="wave-rule" viewBox="0 0 104 12" fill="none" aria-hidden="true">
+      <path d="M2 7C16 1 26 1 40 7s24 6 38 0 22-6 24-3" stroke="#FFCF24" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <p>Disponible dès le 24 août 2026, à Paris (présentiel partiel). Écrivez-moi par email ou via LinkedIn.</p>
+    <div class="modal__actions">
+      <a class="pill" href="mailto:rdupontdedinechin@isalys.eu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email — rdupontdedinechin@isalys.eu
+      </a>
+      <a class="pill pill--ghost" href="https://www.linkedin.com/in/roch-de-dinechin-0a5946214/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C21.4 8.65 22 10.9 22 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21h-4V9Z"/></svg>
+        Profil LinkedIn
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // header shadow on scroll
+  const header=document.querySelector('.site-header');
+  const onScroll=()=>header.classList.toggle('scrolled',window.scrollY>8);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // smooth in-page scrolling for real anchors; neutralize placeholders
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const id=a.getAttribute('href');
+      const t=id&&id.length>1?document.querySelector(id):null;
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+      else if(id==='#top'){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});}
+    });
+  });
+  document.querySelectorAll('[data-inert-cta]').forEach(b=>b.addEventListener('click',e=>e.preventDefault()));
+
+  // ---------- Mobile menu ----------
+  const burger=document.getElementById('burger');
+  const mobileNav=document.getElementById('mobileNav');
+  const setMenu=(open)=>{
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    burger.setAttribute('aria-label',open?'Fermer le menu':'Ouvrir le menu');
+    mobileNav.classList.toggle('open',open);
+    document.body.style.overflow=open?'hidden':'';
+  };
+  burger.addEventListener('click',()=>setMenu(!mobileNav.classList.contains('open')));
+  mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+
+  // ---------- Contact popup (focus-trapped, accessible) ----------
+  const modal=document.getElementById('contactModal');
+  let lastTrigger=null;
+  const focusable='a[href],button:not([disabled])';
+  const openModal=(trigger)=>{
+    lastTrigger=trigger||null;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    const f=modal.querySelector(focusable);
+    if(f)f.focus();
+  };
+  const closeModal=()=>{
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    if(lastTrigger&&typeof lastTrigger.focus==='function')lastTrigger.focus();
+  };
+  document.querySelectorAll('[data-open-contact]').forEach(b=>b.addEventListener('click',(e)=>{
+    if(mobileNav.classList.contains('open'))setMenu(false);
+    openModal(e.currentTarget);
+  }));
+  modal.querySelectorAll('[data-close-contact]').forEach(el=>el.addEventListener('click',closeModal));
+  document.addEventListener('keydown',(e)=>{
+    if(e.key==='Escape'){
+      if(modal.classList.contains('open'))closeModal();
+      else if(mobileNav.classList.contains('open'))setMenu(false);
+    }
+    if(e.key==='Tab'&&modal.classList.contains('open')){
+      const items=[...modal.querySelectorAll(focusable)];
+      if(!items.length)return;
+      const first=items[0],last=items[items.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+
+  // ---------- Scroll reveals ----------
+  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const revs=document.querySelectorAll('.rv');
+  if(reduce||!('IntersectionObserver'in window)){
+    revs.forEach(el=>el.classList.add('in'));
+  }else{
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+    },{rootMargin:'0px 0px -10% 0px',threshold:.12});
+    revs.forEach(el=>io.observe(el));
+  }
+</script>
+</body>
+</html>
