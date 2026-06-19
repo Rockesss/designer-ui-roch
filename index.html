@@ -110,6 +110,9 @@
   .hero-cta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
   .hero-note{font-size:14px;color:#AEB8D6}
   .hero-note b{color:var(--white);font-weight:600}
+  .hero-partner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px;font-size:13px;color:#AEB8D6}
+  .isalys-chip{display:inline-flex;align-items:center;background:var(--white);border-radius:12px;padding:9px 14px;box-shadow:0 8px 22px rgba(0,0,0,.16)}
+  .isalys-chip img{height:26px;width:auto;display:block}
 
   /* right visual */
   .hero-visual{position:relative;align-self:stretch;min-height:420px}
@@ -234,6 +237,8 @@
   .locked-card__skel span:nth-child(1){width:65%}
   .locked-card__skel span:nth-child(2){width:90%}
   .locked-card__skel span:nth-child(3){width:48%}
+  .locked-card__preview--logo{background:linear-gradient(135deg,#EEF2FF,#DCE4F7)}
+  .locked-card__logo{position:absolute;width:62%;max-width:170px;opacity:.5;filter:blur(.4px)}
   .locked-card__lock{position:relative;width:50px;height:50px;border-radius:50%;background:rgba(29,35,64,.92);display:grid;place-items:center;box-shadow:0 10px 26px rgba(29,35,64,.28)}
   .locked-card__lock svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .locked-card__body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
@@ -272,6 +277,8 @@
   .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:clamp(28px,4vw,48px)}
   .footer-brand .wordmark{color:var(--white);font-size:30px}
   .footer-brand p{margin-top:16px;font-size:14px;line-height:1.6;max-width:280px}
+  .footer-partner{margin-top:22px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9AA4C6}
+  .footer-brand .isalys-chip{margin-top:10px}
   .footer-col h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);margin-bottom:16px}
   .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
   .footer-col a{font-size:14.5px;color:#C2CBE6;transition:color .15s ease}
@@ -409,6 +416,10 @@
         </a>
         <span class="hero-note">Disponible dès le <b>24 août 2026</b> · Suresnes</span>
       </div>
+      <p class="hero-partner">
+        Candidature accompagnée par
+        <span class="isalys-chip"><img src="img/isalys-digital-lab.svg" alt="Isalys Digital Lab"></span>
+      </p>
     </div>
 
     <div class="hero-visual" aria-hidden="false">
@@ -593,8 +604,8 @@
 
     <div class="proj-grid">
       <article class="locked-card rv">
-        <div class="locked-card__preview" aria-hidden="true">
-          <div class="locked-card__skel"><span></span><span></span><span></span></div>
+        <div class="locked-card__preview locked-card__preview--logo" aria-hidden="true">
+          <img class="locked-card__logo" src="img/isalys-digital-lab.svg" alt="">
           <div class="locked-card__lock">
             <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
           </div>
@@ -729,6 +740,8 @@
       <div class="footer-brand">
         <span class="wordmark" aria-hidden="true">roch<sup>®</sup></span>
         <p>UI Designer · Design systems multi-marques · Production IA-assistée. Page de candidature, à des fins de démonstration.</p>
+        <p class="footer-partner">Candidature accompagnée par</p>
+        <span class="isalys-chip"><img src="img/isalys-digital-lab.svg" alt="Isalys Digital Lab"></span>
       </div>
       <div class="footer-col">
         <h4>Page</h4>
